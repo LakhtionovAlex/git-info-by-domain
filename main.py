@@ -1,5 +1,6 @@
 import requests
 import socket
+import folium
 
 
 def get_info_by_url(domain):
@@ -21,6 +22,9 @@ def get_info_by_url(domain):
                 break
             else:
                 print(f'{key} : {value}')
+
+            my_map = folium.Map(location=[response.get('lat'), response.get('lon')], zoom_start=15)
+            my_map.save(f'{response.get("query")}_{response.get("city")}.html')
 
     except requests.exceptions.ConnectionError:
         print('Please check your connection')
